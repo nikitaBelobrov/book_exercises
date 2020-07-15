@@ -5,10 +5,14 @@ def reverse(text):
 
 
 def is_palindrome(text):
-    clear_text = text.lower()\
-                     .replace(',', '')\
-                     .replace('.', '')\
-                     .replace(' ', '')
+    clear_text = text.lower()
+
+    forbidden_symbols = (
+        '.', ',', '!', '?', ':', ';', '-', '(', ')', '\n', ' ', '"', '\''
+    )
+    for symbol in forbidden_symbols:
+        clear_text = clear_text.replace(symbol, '')
+
     return clear_text == reverse(clear_text)
 
 
