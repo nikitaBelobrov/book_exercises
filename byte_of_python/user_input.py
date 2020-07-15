@@ -5,7 +5,11 @@ def reverse(text):
 
 
 def is_palindrome(text):
-    return text == reverse(text)
+    clear_text = text.lower()\
+                     .replace(',', '')\
+                     .replace('.', '')\
+                     .replace(' ', '')
+    return clear_text == reverse(clear_text)
 
 
 something = input('Input text: ')
