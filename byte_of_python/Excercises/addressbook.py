@@ -23,7 +23,12 @@ class AddressBook:
             print('{0}: {1}'.format(name, self.contacts[name].email))
 
     def add_new_contact(self):
-        name = input('Input name: ')
+        while True:
+            name = input('Input name: ')
+            if name in self.contacts:
+                print('Contact "{0}" already exists.'.format(name))
+            else:
+                break
         email = input('Input email: ')
 
         self.contacts[name] = ContactCard(name, email)
@@ -38,14 +43,20 @@ class AddressBook:
 
     def change_contact(self):
         name = input('Input name: ')
-        new_email = input('Input new email: ')
-
-        self.contacts[name].email = new_email
+        if name in self.contacts:
+            new_email = input('Input new email: ')
+            self.contacts[name].email = new_email
+            print('New email of "{0}" is {1}'.format(name, new_email))
+        else:
+            print('Contact "{0}" not found.'.format(name))
 
     def delete_contact(self):
         name = input('Input name: ')
-        del self.contacts[name]
-        print('Deleted contact: {0}'.format(name))
+        if name in self.contacts:
+            del self.contacts[name]
+            print('Deleted contact: {0}'.format(name))
+        else:
+            print('Contact "{0}" not found.'.format(name))
 
 
 class ContactCard:
@@ -72,23 +83,21 @@ def main():
         '\n4 - change contact, \n5 - delete contact'
     )
 
-    try:
-        while True:
-            command = input('\nInput command: ')
+    while True:
+        command = input('\nInput command: ')
 
-            if command == '1':
-                my_addressbook.show_all_contacts()
-            elif command == '2':
-                my_addressbook.add_new_contact()
-            elif command == '3':
-                my_addressbook.find_contact()
-            elif command == '4':
-                my_addressbook.change_contact()
-            elif command == '5':
-                my_addressbook.delete_contact()
-            elif command == 'quit':
-                break
-    finally:
+        if command == '1':
+            my_addressbook.show_all_contacts()
+        elif command == '2':
+            my_addressbook.add_new_contact()
+        elif command == '3':
+            my_addressbook.find_contact()
+        elif command == '4':
+            my_addressbook.change_contact()
+        elif command == '5':
+            my_addressbook.delete_contact()
+        elif command == 'quit':
+            break
         # Save all changes
         with open(filename, 'wb') as f:
             pickle.dump(my_addressbook, f)
